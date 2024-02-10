@@ -21,11 +21,11 @@
 
 #ifdef GRPC_HAVE_UNIX_SOCKET
 #ifdef GPR_WINDOWS
-#include <ws2def.h>
 #include <afunix.h>
+#include <ws2def.h>
 #else
 #include <sys/un.h>
-#endif // GPR_WINDOWS
+#endif  // GPR_WINDOWS
 #endif
 
 #include <functional>

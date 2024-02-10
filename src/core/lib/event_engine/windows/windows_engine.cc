@@ -298,7 +298,8 @@ EventEngine::ConnectionHandle WindowsEventEngine::Connect(
   if (ResolvedAddressToV4Mapped(addr, &addr6_v4mapped)) {
     address = addr6_v4mapped;
   }
-  const int addr_family = (address.address()->sa_family == AF_UNIX) ? AF_UNIX : AF_INET6;
+  const int addr_family =
+      (address.address()->sa_family == AF_UNIX) ? AF_UNIX : AF_INET6;
   const int protocol = addr_family == AF_UNIX ? 0 : IPPROTO_TCP;
   SOCKET sock = WSASocket(addr_family, SOCK_STREAM, protocol, nullptr, 0,
                           IOCP::GetDefaultSocketFlags());
@@ -339,9 +340,8 @@ EventEngine::ConnectionHandle WindowsEventEngine::Connect(
   }
   // bind the local address
   ResolvedAddress local_address;
-  if(addr_family == AF_UNIX)
-  {
-    // For ConnectEx() to work for AF_UNIX, the sock needs to be bound to 
+  if (addr_family == AF_UNIX) {
+    // For ConnectEx() to work for AF_UNIX, the sock needs to be bound to
     // the local address of an unnamed socket.
     sockaddr addr = {};
     addr.sa_family = AF_UNIX;

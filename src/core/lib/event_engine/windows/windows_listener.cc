@@ -30,9 +30,9 @@
 #include "src/core/lib/iomgr/port.h"
 
 #ifdef GRPC_HAVE_UNIX_SOCKET
-#include <ws2def.h>
 #include <afunix.h>
-#endif // GRPC_HAVE_UNIX_SOCKET
+#include <ws2def.h>
+#endif  // GRPC_HAVE_UNIX_SOCKET
 
 namespace grpc_event_engine {
 namespace experimental {
@@ -144,10 +144,10 @@ absl::Status WindowsEventEngineListener::SinglePortSocketListener::Start() {
 absl::Status
 WindowsEventEngineListener::SinglePortSocketListener::StartLocked() {
   const EventEngine::ResolvedAddress addr = listener_sockname();
-  const int addr_family = (addr.address()->sa_family == AF_UNIX) ? AF_UNIX : AF_INET6;
+  const int addr_family =
+      (addr.address()->sa_family == AF_UNIX) ? AF_UNIX : AF_INET6;
   const int protocol = addr_family == AF_UNIX ? 0 : IPPROTO_TCP;
-  SOCKET accept_socket = WSASocket(addr_family, SOCK_STREAM, protocol,
-                                   NULL, 0,
+  SOCKET accept_socket = WSASocket(addr_family, SOCK_STREAM, protocol, NULL, 0,
                                    IOCP::GetDefaultSocketFlags());
   if (accept_socket == INVALID_SOCKET) {
     return GRPC_WSA_ERROR(WSAGetLastError(), "WSASocket");
@@ -159,13 +159,14 @@ WindowsEventEngineListener::SinglePortSocketListener::StartLocked() {
   absl::Status error;
   if (addr_family == AF_UNIX) {
     error = SetSocketNonBlock(accept_socket);
-  }else{
+  } else {
     error = PrepareSocket(accept_socket);
   }
   if (!error.ok()) return fail(error);
   // Start the "accept" asynchronously.
   io_state_->listener_socket->NotifyOnRead(&io_state_->on_accept_cb);
-  DWORD addrlen = sizeof(addresses_) / 2; // half of the buffer is for remote addr.
+  DWORD addrlen =
+      sizeof(addresses_) / 2;  // half of the buffer is for remote addr.
   DWORD bytes_received = 0;
   int success =
       AcceptEx(io_state_->listener_socket->raw_socket(), accept_socket,
@@ -284,7 +285,7 @@ WindowsEventEngineListener::SinglePortSocketListener::PrepareListenerSocket(
   absl::Status error;
   if (addr.address()->sa_family == AF_UNIX) {
     error = SetSocketNonBlock(sock);
-  }else{
+  } else {
     error = PrepareSocket(sock);
   }
   if (!error.ok()) return fail(error);
@@ -362,11 +363,11 @@ absl::StatusOr<int> WindowsEventEngineListener::Bind(
     out_addr = ResolvedAddressMakeWild6(out_port);
   }
   // open the socket
-  const int addr_family = (out_addr.address()->sa_family == AF_UNIX) ? AF_UNIX : AF_INET6;
+  const int addr_family =
+      (out_addr.address()->sa_family == AF_UNIX) ? AF_UNIX : AF_INET6;
   const int protocol = addr_family == AF_UNIX ? 0 : IPPROTO_TCP;
-  SOCKET sock =
-      WSASocket(addr_family, SOCK_STREAM, protocol, nullptr, 0,
-                IOCP::GetDefaultSocketFlags());
+  SOCKET sock = WSASocket(addr_family, SOCK_STREAM, protocol, nullptr, 0,
+                          IOCP::GetDefaultSocketFlags());
   if (sock == INVALID_SOCKET) {
     auto error = GRPC_WSA_ERROR(WSAGetLastError(), "WSASocket");
     return GRPC_ERROR_CREATE_REFERENCING("Failed to add port to server", &error,

@@ -25,11 +25,11 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #ifdef GPR_WINDOWS
-#include <ws2def.h>
 #include <afunix.h>
+#include <ws2def.h>
 #else
 #include <sys/un.h>
-#endif // GPR_WINDOWS
+#endif  // GPR_WINDOWS
 
 #include "absl/strings/str_cat.h"
 
@@ -95,7 +95,7 @@ void grpc_unlink_if_unix_domain_socket(
     return;
   }
 
-#ifndef GPR_WINDOWS 
+#ifndef GPR_WINDOWS
   struct stat st;
   if (stat(un->sun_path, &st) == 0 && (st.st_mode & S_IFMT) == S_IFSOCK) {
     unlink(un->sun_path);

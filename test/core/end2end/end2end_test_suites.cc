@@ -569,21 +569,20 @@ class InsecureFixtureWithPipeForWakeupFd : public InsecureFixture {
 #endif
 
 // Returns the temp directory to create uds in this test.
-std::string GetTempDir(){
+std::string GetTempDir() {
 #ifdef GPR_WINDOWS
   // Windows temp dir usually exceeds uds max paht length,
   // so we create a short dir for this test.
   // TODO: find a better solution.
   std::string temp_dir = "C:/tmp/";
   if (CreateDirectoryA(temp_dir.c_str(), NULL) == 0 &&
-    ERROR_ALREADY_EXISTS != GetLastError())
-  {
-    grpc_core::Crash(absl::StrCat("Could not create temp dir: ", temp_dir));
+      ERROR_ALREADY_EXISTS != GetLastError()) {
+    Crash(absl::StrCat("Could not create temp dir: ", temp_dir));
   }
   return temp_dir;
 #else
   return "/tmp/";
-#endif // GPR_WINDOWS 
+#endif  // GPR_WINDOWS
 }
 
 const std::string temp_dir = GetTempDir();
@@ -683,10 +682,9 @@ std::vector<CoreTestConfiguration> DefaultConfigs() {
               return std::make_unique<LocalTestFixture>(
                   absl::StrFormat(
                       "unix:%s"
-                      "grpc_fullstack_test.%%25.%d.%" PRId64
-                      ".%" PRId32 ".%" PRId64 ".%" PRId64,
-                      temp_dir,
-                      getpid(), now.tv_sec, now.tv_nsec,
+                      "grpc_fullstack_test.%%25.%d.%" PRId64 ".%" PRId32
+                      ".%" PRId64 ".%" PRId64,
+                      temp_dir, getpid(), now.tv_sec, now.tv_nsec,
                       unique.fetch_add(1, std::memory_order_relaxed), Rand()),
                   UDS);
             }},
@@ -703,10 +701,9 @@ std::vector<CoreTestConfiguration> DefaultConfigs() {
               return std::make_unique<LocalTestFixture>(
                   absl::StrFormat(
                       "unix:%s"
-                      "grpc_fullstack_test.%d.%" PRId64 ".%" PRId32
-                      ".%" PRId64 ".%" PRId64,
-                      temp_dir,
-                      getpid(), now.tv_sec, now.tv_nsec,
+                      "grpc_fullstack_test.%d.%" PRId64 ".%" PRId32 ".%" PRId64
+                      ".%" PRId64,
+                      temp_dir, getpid(), now.tv_sec, now.tv_nsec,
                       unique.fetch_add(1, std::memory_order_relaxed), Rand()),
                   UDS);
             }},
@@ -949,10 +946,9 @@ std::vector<CoreTestConfiguration> DefaultConfigs() {
               gpr_timespec now = gpr_now(GPR_CLOCK_REALTIME);
               return std::make_unique<InsecureFixture>(absl::StrFormat(
                   "unix:%s"
-                  "grpc_fullstack_test.%d.%" PRId64 ".%" PRId32
-                  ".%" PRId64 ".%" PRId64,
-                  temp_dir,
-                  getpid(), now.tv_sec, now.tv_nsec,
+                  "grpc_fullstack_test.%d.%" PRId64 ".%" PRId32 ".%" PRId64
+                  ".%" PRId64,
+                  temp_dir, getpid(), now.tv_sec, now.tv_nsec,
                   unique.fetch_add(1, std::memory_order_relaxed), Rand()));
             }},
 #endif

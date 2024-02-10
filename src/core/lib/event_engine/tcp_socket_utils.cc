@@ -33,12 +33,12 @@
 
 #ifdef GRPC_HAVE_UNIX_SOCKET
 #ifdef GPR_WINDOWS
-#include <ws2def.h>
 #include <afunix.h>
+#include <ws2def.h>
 #else
 #include <sys/stat.h>  // IWYU pragma: keep
 #include <sys/un.h>
-#endif // GPR_WINDOWS
+#endif  // GPR_WINDOWS
 #endif
 
 #ifdef GRPC_HAVE_VSOCK

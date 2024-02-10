@@ -33,8 +33,8 @@
 #include "src/core/lib/iomgr/port.h"
 
 #ifdef GRPC_HAVE_UNIX_SOCKET
-#include <ws2def.h>
 #include <afunix.h>
+#include <ws2def.h>
 #endif
 
 namespace grpc_event_engine {
@@ -135,7 +135,7 @@ class WindowsEventEngineListener : public EventEngine::Listener {
 #if __cplusplus >= 201703L
     // this assert only works for c++17 or above
     static_assert(sizeof(sockaddr_un) >= sizeof(sockaddr_in6));
-#endif // __cplusplus
+#endif  // __cplusplus
 #else
     uint8_t addresses_[(sizeof(sockaddr_in6) + 16) * 2] = {};
 #endif

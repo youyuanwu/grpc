@@ -285,7 +285,7 @@ class CLanguage(object):
                     "cmake",
                     "cmake_ninja_vs2019",
                     "cmake_vs2019",
-                    "cmake_vs2022"
+                    "cmake_vs2022",
                 ],
             )
             _check_arch(self.args.arch, ["default", "x64", "x86"])
