@@ -30,8 +30,13 @@
 #include "src/core/lib/iomgr/port.h"
 #include "src/core/lib/iomgr/resolved_address.h"
 #ifdef GRPC_HAVE_UNIX_SOCKET
+#ifdef GPR_WINDOWS
+#include <ws2def.h>
+#include <afunix.h>
+#else
 #include <sys/un.h>
-#endif
+#endif // GPR_WINDOWS
+#endif // GRPC_HAVE_UNIX_SOCKET
 
 #include <string>
 

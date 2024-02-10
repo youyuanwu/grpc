@@ -18,8 +18,13 @@
 
 #include "src/core/lib/address_utils/parse_address.h"
 #ifdef GRPC_HAVE_UNIX_SOCKET
+#ifdef GPR_WINDOWS
+#include <ws2def.h>
+#include <afunix.h>
+#else
 #include <sys/un.h>
-#endif
+#endif // GPR_WINDOWS
+#endif // GRPC_HAVE_UNIX_SOCKET
 
 #ifdef GRPC_HAVE_VSOCK
 #include <linux/vm_sockets.h>

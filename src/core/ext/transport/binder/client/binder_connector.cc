@@ -20,7 +20,12 @@
 #include "src/core/lib/iomgr/port.h"
 
 #ifdef GRPC_HAVE_UNIX_SOCKET
+#ifdef GPR_WINDOWS
+#include <ws2def.h>
+#include <afunix.h>
+#else
 #include <sys/un.h>
+#endif // GPR_WINDOWS
 #endif
 
 #include <functional>

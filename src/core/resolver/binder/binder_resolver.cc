@@ -24,8 +24,13 @@
 #ifdef GRPC_HAVE_UNIX_SOCKET
 
 #include <string.h>
+#ifdef GPR_WINDOWS
+#include <ws2def.h>
+#include <afunix.h>
+#else
 #include <sys/socket.h>
 #include <sys/un.h>
+#endif // GPR_WINDOWS
 
 #include <memory>
 #include <utility>
