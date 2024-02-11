@@ -33,8 +33,10 @@
 #include "src/core/lib/iomgr/port.h"
 
 #ifdef GRPC_HAVE_UNIX_SOCKET
+// clang-format off
 #include <ws2def.h>
 #include <afunix.h>
+// clang-format on
 #endif
 
 namespace grpc_event_engine {

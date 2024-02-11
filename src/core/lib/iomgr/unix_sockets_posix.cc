@@ -25,8 +25,10 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #ifdef GPR_WINDOWS
+// clang-format off
 #include <ws2def.h>
 #include <afunix.h>
+// clang-format on
 #else
 #include <sys/un.h>
 #endif  // GPR_WINDOWS

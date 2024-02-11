@@ -210,7 +210,7 @@ static grpc_error_handle enable_socket_low_latency(SOCKET sock) {
 
 absl::Status SetSocketNonBlock(SOCKET sock) {
   return grpc_tcp_set_non_block(sock);
-} 
+}
 
 absl::Status PrepareSocket(SOCKET sock) {
   absl::Status err;

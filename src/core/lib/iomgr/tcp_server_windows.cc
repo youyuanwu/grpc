@@ -326,7 +326,8 @@ static grpc_error_handle start_accept_locked(grpc_tcp_listener* port) {
     return absl::OkStatus();
   }
   const int addr_family =
-      grpc_sockaddr_get_family(&port->resolved_addr) == AF_UNIX ? AF_UNIX : AF_INET6;
+      grpc_sockaddr_get_family(&port->resolved_addr) == AF_UNIX ? AF_UNIX
+                                                                : AF_INET6;
   const int protocol = addr_family == AF_UNIX ? 0 : IPPROTO_TCP;
   sock = WSASocket(addr_family, SOCK_STREAM, protocol, NULL, 0,
                    grpc_get_default_wsa_socket_flags());
@@ -569,8 +570,8 @@ static grpc_error_handle tcp_server_add_port(grpc_tcp_server* s,
     addr = &wildcard;
   }
 
-  const int addr_family = grpc_sockaddr_get_family(addr) == AF_UNIX ? AF_UNIX
-                                                                 : AF_INET6;
+  const int addr_family =
+      grpc_sockaddr_get_family(addr) == AF_UNIX ? AF_UNIX : AF_INET6;
   const int protocol = addr_family == AF_UNIX ? 0 : IPPROTO_TCP;
   sock = WSASocket(addr_family, SOCK_STREAM, protocol, NULL, 0,
                    grpc_get_default_wsa_socket_flags());
