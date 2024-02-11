@@ -132,10 +132,6 @@ class WindowsEventEngineListener : public EventEngine::Listener {
 #ifdef GRPC_HAVE_UNIX_SOCKET
     // unix addr is larger than ip addr.
     uint8_t addresses_[(sizeof(sockaddr_un) + 16) * 2] = {};
-#if __cplusplus >= 201703L
-    // this assert only works for c++17 or above
-    static_assert(sizeof(sockaddr_un) >= sizeof(sockaddr_in6));
-#endif // __cplusplus
 #else
     uint8_t addresses_[(sizeof(sockaddr_in6) + 16) * 2] = {};
 #endif

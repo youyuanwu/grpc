@@ -162,7 +162,8 @@ static int64_t tcp_connect(grpc_closure* on_done, grpc_endpoint** endpoint,
   }
 
   // extract family
-  addr_family = (grpc_sockaddr_get_family(addr) == AF_UNIX) ? AF_UNIX : AF_INET6;;
+  addr_family =
+      (grpc_sockaddr_get_family(addr) == AF_UNIX) ? AF_UNIX : AF_INET6;
   protocol = addr_family == AF_UNIX ? 0 : IPPROTO_TCP;
 
   sock = WSASocket(addr_family, SOCK_STREAM, protocol, NULL, 0,
@@ -196,7 +197,7 @@ static int64_t tcp_connect(grpc_closure* on_done, grpc_endpoint** endpoint,
   }
 
   if (addr_family == AF_UNIX) {
-    // For ConnectEx() to work for AF_UNIX, the sock needs to be bound to 
+    // For ConnectEx() to work for AF_UNIX, the sock needs to be bound to
     // the local address of an unnamed socket.
     local_address = {};
     ((grpc_sockaddr*)local_address.addr)->sa_family = AF_UNIX;

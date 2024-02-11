@@ -38,7 +38,7 @@
 #else
 #include <sys/stat.h>  // IWYU pragma: keep
 #include <sys/un.h>
-#endif // GPR_WINDOWS
+#endif  // GPR_WINDOWS
 #endif
 
 #ifdef GRPC_HAVE_VSOCK
